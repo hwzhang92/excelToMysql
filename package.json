@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hwzhang92/excelToMysql",
   "dependencies": {
+    "compression": "^1.5.2",
     "express": "^4.13.3",
     "xls-to-json": "^0.3.2"
   }

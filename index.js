@@ -9,8 +9,15 @@
       console.log(result);
     }
   });*/
+var compression = require('compression');
 var express = require('express');
 var app = express();
+app.use(compression({filter:shouldCompress}));
+
+function shouldCompress(req, res){
+  if(res.get('Content-Type') == 'text/html') return false;
+  return compression.filter(req, res);
+}
 
 // 获取指定文件
 app.get('/files/:id', function (req, res) {
