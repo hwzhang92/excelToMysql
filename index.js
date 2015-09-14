@@ -9,10 +9,13 @@
       console.log(result);
     }
   });*/
+var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
 var compression = require('compression');
 var express = require('express');
 var app = express();
-app.use(compression({filter:shouldCompress}));
+app.use(compression({filter:shouldCompress})); // 启用gzip压缩
 
 function shouldCompress(req, res){
   if(res.get('Content-Type') == 'text/html') return false;
@@ -41,8 +44,31 @@ app.get('/files/:id', function (req, res) {
 });
 
 // 上传文件
+var multiparty = require('multiparty');
 app.post('/files', function(req, res){
-  res.send('files created!');
+  var options = {
+    autoFiles:true,
+    uploadDir:'./resources/'
+  }
+  var form = new multiparty.Form(options);
+  form.parse(req, function(err, fields, files){
+    if(err){
+      console.log(err);
+      res.json({status:"failed",mesg:err.toString()});
+    }else{
+      var resJson = [];
+      _.flatten(_.values(files)).forEach(function(file){
+        var newName = Date.now() + path.extname(file.originalFilename);
+        try{
+          fs.renameSync(file.path, './resources/'+newName);
+          resJson.push({status:"succ",mesg:newName});
+        }catch(err){
+          resJson.push({status:"failed",mesg:err.toString()});
+        }
+      })
+      res.json(resJson);
+    }
+  })
 })
 
 var server = app.listen(3000, function () {

@@ -11,8 +11,10 @@
 ##文件管理RESTful API
 ***
 1. GET /files 获取文件列表
-2. GET /files/:id 获取
+2. **GET /files/:id 获取指定文件** 
 3. POST /files 上传文件
+	* request：html表单形式的文件上传，支持一次上传多个文件
+	* response：
 4. POST /files/:id 上传文件，并指定文件名，若存在同名文件，则不做任何操作
 5. PUT /files/:id 更新指定文件名的文件
 6. DELETE /files/:id 删除指定文件名的文件
