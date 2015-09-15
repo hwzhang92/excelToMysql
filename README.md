@@ -35,3 +35,7 @@
 5. PUT /files/:id 更新指定文件名的文件
 6. DELETE /files/:id 删除指定文件名的文件
 
+##启动方式
+***
+npm start
+

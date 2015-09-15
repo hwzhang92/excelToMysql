@@ -4,6 +4,7 @@
   "description": "将excel文件导入到Mysql数据库中",
   "main": "app.js",
   "scripts": {
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
