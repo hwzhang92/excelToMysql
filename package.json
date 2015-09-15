@@ -2,7 +2,7 @@
   "name": "excelToMysql",
   "version": "0.0.1",
   "description": "将excel文件导入到Mysql数据库中",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +21,7 @@
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "multiparty": "^4.1.2",
+    "mysql": "^2.9.0",
     "xls-to-json": "^0.3.2"
   }
 }

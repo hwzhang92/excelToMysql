@@ -1,18 +1,8 @@
-/*node_xj = require("xls-to-json");
-  node_xj({
-    input: "excel/sample.xls",  // input xls 
-    output: null // output json 
-  }, function(err, result) {
-    if(err) {
-      console.error(err);
-    } else {
-      console.log(result);
-    }
-  });*/
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var compression = require('compression');
+var multiparty = require('multiparty');
 var express = require('express');
 var app = express();
 app.use(compression({filter:shouldCompress})); // 启用gzip压缩
@@ -37,14 +27,10 @@ app.get('/files/:id', function (req, res) {
       console.log(err);
       res.status(err.status).end();
     }
-    else {
-      console.log('Sent:', fileName);
-    }
   })
 });
 
 // 上传文件
-var multiparty = require('multiparty');
 app.post('/files', function(req, res){
   var options = {
     autoFiles:true,
@@ -69,6 +55,24 @@ app.post('/files', function(req, res){
       res.json(resJson);
     }
   })
+})
+
+var node_xj = require("xls-to-json");
+var mysql = require('mysql');
+app.post('/import',function(req,res){
+  // 读取excel文件
+  node_xj({
+    input: "resources/"+req.query.file,  // input xls 
+    output: null // output json 
+  }, function(err, result) {
+    if(err) {
+      console.error(err);
+    } else {
+      var connection = mysql.createConnection(req.query.db);
+      connection.connect();
+      connection.end();
+    }
+  });
 })
 
 var server = app.listen(3000, function () {
