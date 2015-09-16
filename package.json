@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/hwzhang92/excelToMysql.git"
   },
-  "author": "",
+  "author": "zhanghongwei",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hwzhang92/excelToMysql/issues"
@@ -21,6 +21,7 @@
     "compression": "^1.5.2",
     "express": "^4.13.3",
     "lodash": "^3.10.1",
+    "morgan": "^1.6.1",
     "multiparty": "^4.1.2",
     "mysql": "^2.9.0",
     "xls-to-json": "^0.3.2"

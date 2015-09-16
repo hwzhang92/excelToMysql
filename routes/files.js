@@ -9,8 +9,10 @@ var router = express.Router();
 router.use(compression({filter:shouldCompress})); // 启用gzip压缩
 
 function shouldCompress(req, res){
-  if(res.get('Content-Type') == 'text/html') return false;
-  return compression.filter(req, res);
+  var contentType = res.get('Content-Type');
+  if(_.isEmpty(contentType)) return false;
+  if(config.gzip.indexOf(contentType.split(';')[0]) === -1 ) return false;
+  return true;
 }
 
 var filesRootPath = process.cwd() + config.root;
