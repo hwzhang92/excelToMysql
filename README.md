@@ -4,13 +4,11 @@
 <br>
 
 ##excel文件规范
-***
 * excel97-03格式，不支持07以后的格式
 * 用office打开excel文件，如果单元格有感叹号，尽量根据说明修正，否则会出现意想不到的问题
 
 ##文件管理RESTful API
-***
-1. GET /files 获取文件列表
+1. **GET /files 获取文件列表**
 	* response:
 	<pre>
 		["filename1","filename2",...]
@@ -35,7 +33,7 @@
 		<pre>
 		{"status":"failed",mesg:"errorInfo"} // 操作失败以及错误信息
 		</pre>
-4. POST /files/:id 上传文件，并指定文件名，若存在同名文件，则不做任何操作
+4. **POST /files/:id 上传文件，并指定文件名，若存在同名文件，则不做任何操作**
 	* request：html表单形式的文件上传，若上传多个文件，__随机__取其中一个
 	* response:
 	<pre>
@@ -43,7 +41,7 @@
 	or
 	{"status":"failed",mesg:"errorInfo"}	
 	</pre>
-5. PUT /files/:id 更新指定文件名的文件
+5. **PUT /files/:id 更新指定文件名的文件**
 	* request：html表单形式的文件上传，若上传多个文件，__随机__取其中一个
 	* response:
 	<pre>
@@ -51,19 +49,19 @@
 	or
 	{"status":"failed",mesg:"errorInfo"}	
 	</pre>
-6. DELETE /files/:id 删除指定文件名的文件
+6. **DELETE /files/:id 删除指定文件名的文件**
 	* response:
 	<pre>
 	{"status":"succ"}
 	or
 	{"status":"failed"}
 	</pre>
-7. HEAD /files/:id 判断文件是否存在
+7. **HEAD /files/:id 判断文件是否存在**
 	* response: 200 or 404
 
 ## 数据库导入API
 ***
-1. POST /import?file:=file
+1. **POST /import?file:=file**
    * request
    	   * GET参数
    	   <pre>
@@ -81,7 +79,6 @@
        </pre>  
 
 ##导入配置说明
-***
 <pre>
 {
 	"connection":{}, //参见<a href="https://github.com/felixge/node-mysql/#connection-options">node-mysql connection options</a>
@@ -124,7 +121,6 @@
 </pre>
 
 ##启动方式
-***
 * 进入package.json所在目录，执行npm start，默认3000端口
 * 指定端口:
 	* **linux**: PORT=[port] npm start
