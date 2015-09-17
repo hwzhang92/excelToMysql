@@ -1,0 +1,20 @@
+{
+	"connection":{
+		"user":"root",
+		"port":3307
+	},
+	"colModels":[
+		{
+			"tableName":"test",
+			"fieldMapping":[
+				{
+					"name":"user",
+					"field":"name"
+				},{
+					"name":"date"
+				}
+			]
+		}
+	],
+	"preProcessors":["fun1"]
+}

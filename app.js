@@ -2,8 +2,8 @@ var logger = require('morgan');
 var express = require('express');
 var app = express();
 
-var files = require('./routes/files');
-var _import = require('./routes/import.js');
+var files = require('./routes/files/files');
+var _import = require('./routes/import/import');
 
 app.use(logger('dev'));
 

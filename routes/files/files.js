@@ -1,4 +1,4 @@
-var config = require('../configs/files');
+var config = require('./config');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
