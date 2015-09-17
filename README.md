@@ -7,7 +7,7 @@
 * excel97-03格式，不支持07以后的格式
 * 用office打开excel文件，如果单元格有感叹号，尽量根据说明修正，否则会出现意想不到的问题
 
-##文件管理RESTful API
+##文件管理API
 1. **GET /files 获取文件列表**
 	* response:
 	<pre>
@@ -60,7 +60,6 @@
 	* response: 200 or 404
 
 ## 数据库导入API
-***
 1. **POST /import?file:=file**
    * request
    	   * GET参数
