@@ -53,10 +53,33 @@
 	"colModels":[
 		{
 			tableName:"tableName", // 表名称，必填
-			"fieldMapping":[
+			"columnMapping":[ // 表字段映射规则
 				{
-					"name":"name", // 对应excel文件中的列名，必填
-					"field":"field" // 对应数据库字段名，默认值与name相同
+					"name":"name", // 表字段名称
+					"valueGenerator":"", //值生成方式，可选值见下表
+					<table style="margin-left:150px">
+						<tr>
+							<th>值</th>
+							<th>含义</th>
+							<th>备注</th>
+						</tr>
+						<tr>
+							<td>fileColumn</td>
+							<td>对应文件的某一列</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>relatedId</td>
+							<td>对应某张表同一行的id</td>
+							<td>该表的配置必须放在前面</td>
+						</tr>
+						<tr>
+							<td>constant</td>
+							<td>常量</td>
+							<td></td>
+						</tr>
+					</table>
+					<i>注：具体值需要配置同名字段，如valueGenerator的值为fileColumn，则增加fileColumn字段表示具体值</i>
 				}
 			]
 		}

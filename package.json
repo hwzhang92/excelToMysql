@@ -19,6 +19,7 @@
   "homepage": "https://github.com/hwzhang92/excelToMysql",
   "dependencies": {
     "compression": "^1.5.2",
+    "eventproxy": "^0.3.4",
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",

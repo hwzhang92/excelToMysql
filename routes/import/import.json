@@ -6,12 +6,15 @@
 	"colModels":[
 		{
 			"tableName":"test",
-			"fieldMapping":[
+			"columnMapping":[
 				{
-					"name":"user",
-					"field":"name"
+					"name":"name",
+					"valueGenerator":"fileColumn",
+					"fileColumn":"user"
 				},{
-					"name":"date"
+					"name":"date",
+					"valueGenerator":"fileColumn",
+					"fileColumn":"date"
 				}
 			]
 		}
