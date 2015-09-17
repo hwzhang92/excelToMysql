@@ -11,6 +11,10 @@
 ##文件管理RESTful API
 ***
 1. GET /files 获取文件列表
+	* response:
+	<pre>
+		["filename1","filename2",...]
+	</pre>
 2. **GET /files/:id 获取指定文件** 
 3. **POST /files 上传文件**
 	* request：html表单形式的文件上传，支持一次上传多个文件
@@ -32,8 +36,30 @@
 		{"status":"failed",mesg:"errorInfo"} // 操作失败以及错误信息
 		</pre>
 4. POST /files/:id 上传文件，并指定文件名，若存在同名文件，则不做任何操作
+	* request：html表单形式的文件上传，若上传多个文件，__随机__取其中一个
+	* response:
+	<pre>
+	{"status":"succ",mesg:"filename"}
+	or
+	{"status":"failed",mesg:"errorInfo"}	
+	</pre>
 5. PUT /files/:id 更新指定文件名的文件
+	* request：html表单形式的文件上传，若上传多个文件，__随机__取其中一个
+	* response:
+	<pre>
+	{"status":"succ",mesg:"filename"}
+	or
+	{"status":"failed",mesg:"errorInfo"}	
+	</pre>
 6. DELETE /files/:id 删除指定文件名的文件
+	* response:
+	<pre>
+	{"status":"succ"}
+	or
+	{"status":"failed"}
+	</pre>
+7. HEAD /files/:id 判断文件是否存在
+	* response: 200 or 404
 
 ## 数据库导入API
 ***
