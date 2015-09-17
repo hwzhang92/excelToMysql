@@ -43,7 +43,16 @@
    	   <pre>
    	   file: 文件名
    	   </pre>
-   * response  
+   * response
+       <pre>
+       返回插入出错的行以及出错信息，若没有错误则返回空数组
+       [
+       	{
+       		"index":"", // 数据序号，对应excel文件的行，从0开始
+       		"mesg":{} // 具体出错信息
+       	}
+       ]
+       </pre>  
 
 ##导入配置说明
 ***
@@ -83,11 +92,16 @@
 				}
 			]
 		}
-	]
+	],
+	"preProcessors":[] // 预处理器
 }
 </pre>
 
 ##启动方式
 ***
-npm start
+* 进入package.json所在目录，执行npm start，默认3000端口
+* 指定端口:
+	* **linux**: PORT=[port] npm start
+	* **windows**: set PORT=[port] & npm start 	 
+
 

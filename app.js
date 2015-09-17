@@ -9,7 +9,8 @@ var _import = require('./routes/import/import');
 app.use(function (req, res, next) {
     var reqDomain = domain.create();
     reqDomain.on('error', function (err) { // 下面抛出的异常在这里被捕获
-        res.send(err.status || 500, err.stack); // 成功给用户返回了 500
+    		console.log(err);
+        res.status(err.status || 500).end(); // 成功给用户返回了 500
     });
     reqDomain.run(next);
 });

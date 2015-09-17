@@ -1,11 +1,14 @@
 {
 	"connection":{
+		"database":"test",
 		"user":"root",
-		"port":3307
+		"port":3307,
+		"charset":"utf8_general_ci",
+		"debug":"true"
 	},
 	"colModels":[
 		{
-			"tableName":"test",
+			"tableName":"import",
 			"columnMapping":[
 				{
 					"name":"name",
