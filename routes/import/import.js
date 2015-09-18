@@ -32,6 +32,8 @@ router.post('/',function(req,res){
       // 定义所有插入操作完成后触发的事件，返回处理结果
       var ep = new EventProxy();
       ep.after('insert',result.length,function(list){
+        // 关闭数据连接
+        connection.end();
         // 返回结果
         list = list.filter(function(n){return n!=null}); // 去掉null元素
         if(!res.headersSent) res.json(list);
@@ -52,7 +54,7 @@ router.post('/',function(req,res){
             var insertSql = sqlHandle(colModels[i],ids,item);
             connection.query(insertSql,function(err,result){
               if(err) {
-                ep.emit('insert',{"index":index,"mesg":err});
+                ep.emit('insert',{"index":index,"tableName":colModels[i].tableName,"mesg":err});
                 return;
               }
               ids[colModels[i].tableName] = result.insertId;
@@ -61,8 +63,6 @@ router.post('/',function(req,res){
           }
         })(0,import_conf.colModels);
       })
-      // 关闭数据连接
-      connection.end();
     }
   });
 })
