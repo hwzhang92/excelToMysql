@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/hwzhang92/excelToMysql",
   "dependencies": {
+    "body-parser": "^1.14.0",
     "compression": "^1.5.2",
     "eventproxy": "^0.3.4",
     "express": "^4.13.3",

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var node_xj = require("xls-to-json");
 var mysql = require('mysql');
 var EventProxy = require('eventproxy');
@@ -20,6 +21,8 @@ router.post('/',function(req,res){
     } else {
       // 获取导入配置
       var import_conf = require("./import.json"); 
+      // 跟请求参数合并
+      import_conf = _.defaultsDeep(req.body,import_conf);
       // 载入预处理器
       var preProcessors = require("./preProcessor.js");
       // 连接数据库

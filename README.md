@@ -120,6 +120,9 @@
 }
 </pre>
 
+## 安装
+下载完整项目包，进入到package.json所在目录，执行npm install
+
 ##启动方式
 * 进入package.json所在目录，执行npm start，默认3000端口
 * 指定端口:
