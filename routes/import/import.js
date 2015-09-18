@@ -46,22 +46,33 @@ router.post('/',function(req,res){
         })
         //插入数据，根据配置一行数据可能要插入到多张表
         var ids = {}; // 保存每次插入成功之后记录的id，以表名称为key
-        (function(i,colModels){
-          var fn = arguments.callee;
-          if(i>=colModels.length){
-            ep.emit('insert');
-          }else{
-            var insertSql = sqlHandle(colModels[i],ids,item);
-            connection.query(insertSql,function(err,result){
-              if(err) {
-                ep.emit('insert',{"index":index,"tableName":colModels[i].tableName,"mesg":err});
-                return;
-              }
-              ids[colModels[i].tableName] = result.insertId;
-              fn(i+1,colModels);
-            })
-          }
-        })(0,import_conf.colModels);
+        // 开启事务
+        connection.beginTransaction(function(err){
+          if(err) throw err;
+          (function(i,colModels){
+            var fn = arguments.callee;
+            if(i>=colModels.length){
+              connection.commit(function(err){
+                if(err){
+                  ep.emit('insert',{"index":index,"mesg":err});
+                  return connection.rollback();
+                }else{
+                  ep.emit('insert');
+                }
+              })
+            }else{
+              var insertSql = sqlHandle(colModels[i],ids,item);
+              connection.query(insertSql,function(err,result){
+                if(err) {
+                  ep.emit('insert',{"index":index,"tableName":colModels[i].tableName,"mesg":err});
+                  return connection.rollback();;
+                }
+                ids[colModels[i].tableName] = result.insertId;
+                fn(i+1,colModels);
+              })
+            }
+          })(0,import_conf.colModels);
+        })
       })
     }
   });
