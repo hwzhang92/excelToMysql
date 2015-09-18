@@ -83,7 +83,7 @@ function sqlHandle(model,ids,item){
   model.columnMapping.forEach(function(mapping){
     switch(mapping.valueGenerator){
       case "fileColumn":
-        insertValues[mapping.name] = item[mapping[mapping.valueGenerator]];
+        insertValues[mapping.name] = item[mapping[mapping.valueGenerator]] || item[mapping.name];
         break;
       case "relateId":
         insertValues[mapping.name] = ids[mapping[mapping.valueGenerator]];

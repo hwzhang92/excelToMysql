@@ -69,7 +69,7 @@
    	   </pre>
    	   * POST参数
    	   <pre>
-   	   {} // 参见<a href="#导入配置说明">导入配置</a>
+   	   {} // 参见<a href="#导入配置说明">导入配置说明</a>
    	   </pre>
    * response
        <pre>
@@ -102,7 +102,7 @@
 						<tr>
 							<td>fileColumn</td>
 							<td>对应文件的某一列</td>
-							<td></td>
+							<td>该字段若省略表示与name值相同</td>
 						</tr>
 						<tr>
 							<td>relatedId</td>
