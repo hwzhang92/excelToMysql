@@ -75,7 +75,7 @@ function sqlHandle(model,ids,item){
         insertValues[mapping.name] = item[mapping[mapping.valueGenerator]];
         break;
       case "relateId":
-        insertValues[mapping.name] = ids[relateId];
+        insertValues[mapping.name] = ids[mapping[mapping.valueGenerator]];
         break;
       case "constant":
         insertValues[mapping.name] = mapping[mapping.valueGenerator];
