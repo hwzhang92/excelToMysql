@@ -57,7 +57,7 @@ router.post('/',function(req,res){
                   ep.emit('insert',{"index":index,"mesg":err});
                   return connection.rollback();
                 }else{
-                  ep.emit('insert');
+                  ep.emit('insert',{"index":index,"ids":ids});
                 }
               })
             }else{
