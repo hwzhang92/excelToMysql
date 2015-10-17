@@ -5,8 +5,7 @@
 		"user":"root",
 		"port":3307,
 		"charset":"utf8_general_ci",
-		"connectTimeout":50000,
-		"debug":"true"
+		"connectTimeout":50000
 	},
 	"colModels":[
 	{
@@ -40,7 +39,7 @@
       }]
   },{
       "tableName":"family",
-      "alterTable":true,
+      "alterTable":false,
       "columnMapping":[{
           "name":"father",
           "valueGenerator":"fileColumn",

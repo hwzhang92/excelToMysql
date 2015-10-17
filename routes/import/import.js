@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('./config');
 var filesRootPath = process.cwd() + config.root;
+var responseJson = {};
 
 var sql = "INSERT INTO ?? SET ?";
 
@@ -17,7 +18,10 @@ router.post('/',function(req,res){
   }, function(err, result) {
     if(err) {
       console.error(err);
-      res.status(err.status).end();
+      responseJson.code = 100;
+      responseJson.mesg = config.error[responseJson.code];
+      responseJson.info = err.message;
+      res.json(responseJson).end();
     } else {
       // 获取导入配置
       var import_conf = require("./import.json"); 
@@ -30,7 +34,6 @@ router.post('/',function(req,res){
       connection.connect();
       // 定义所有插入操作完成后触发的事件，返回处理结果
       var ep = new EventProxy();
-
       var alterTableOperatorSuccess = true;
       ep.after('alter',import_conf.colModels.length,function(list){
         if(!alterTableOperatorSuccess){ // 创建表操作失败
@@ -38,13 +41,27 @@ router.post('/',function(req,res){
           connection.end();
           // 返回结果
           list = list.filter(function(n){return n!=null}); // 去掉null元素
-          if(!res.headersSent) res.json(list);
+          responseJson.code = 300;
+          responseJson.mesg = config.error[responseJson.code];
+          responseJson.info = list;
+          if(!res.headersSent) res.json(responseJson);
         }else{ // 创建表操作成功
           ep.after('insert',result.length,function(list){
             // 关闭数据连接
             connection.end();
             // 返回结果
-            if(!res.headersSent) res.json(list);
+            var successRows = 0, failedRows = 0;
+            list.forEach(function(item){
+              if(item.ids) successRows++;
+              else failedRows++;
+            })
+            if(successRows===0) responseJson.code = 201;
+            else responseJson.code = 200;
+            responseJson.mesg = config.error[responseJson.code];
+            responseJson.successRows = successRows;
+            responseJson.failedRows = failedRows;
+            responseJson.info = list;
+            if(!res.headersSent) res.json(responseJson);
           })
           // 处理数据
           result.forEach(function(item,index){
@@ -62,7 +79,7 @@ router.post('/',function(req,res){
                 if(i>=colModels.length){
                   connection.commit(function(err){
                     if(err){
-                      ep.emit('insert',{"index":index,"mesg":err});
+                      ep.emit('insert',{"index":index,"mesg":err.message});
                       return connection.rollback();
                     }else{
                       ep.emit('insert',{"index":index,"ids":ids});
@@ -72,7 +89,7 @@ router.post('/',function(req,res){
                   var insertSql = sqlHandle(colModels[i],ids,item);
                   connection.query(insertSql,function(err,result){
                     if(err) {
-                      ep.emit('insert',{"index":index,"tableName":colModels[i].tableName,"mesg":err});
+                      ep.emit('insert',{"index":index,"tableName":colModels[i].tableName,"mesg":err.message});
                       return connection.rollback();;
                     }
                     ids[colModels[i].tableName] = result.insertId;
@@ -100,7 +117,7 @@ router.post('/',function(req,res){
             connection.query(alterSql+alterSqlRight,function(err){
               if(err && alterTableOperatorSuccess){
                 alterTableOperatorSuccess = false;
-                ep.emit('alter',{"tableName":item.tableName,"mesg":err});
+                ep.emit('alter',{"tableName":item.tableName,"mesg":err.message});
               }else{
                 ep.emit('alter');
               }
