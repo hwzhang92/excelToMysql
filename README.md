@@ -73,18 +73,24 @@
    	   </pre>
    * response
        <pre>
-       返回一个数组，每个元素为一个对象，表示excel文件对应的行插入的状态及相关信息，具体形式如下：
-       success：
+       返回一个数组，每个元素为一个对象，具体形式如下：
+       alter failed:
+       {
+       		"tableName":"", // 修改的表名称
+       		"mesg":{} //具体出错信息
+       }
+       insert success：
        {
        		"index":"", // 数据序号，对应excel文件的行，从0开始
        		"ids":{} // 该行插入到数据库之后的id集合，以tableName作为健，id作为值的一个对象
        }
-       failed:
+       insert failed:
        {
        		"index":"", // 数据序号，对应excel文件的行，从0开始
        		"tableName":"", // 如果可能，会有该字段表示具体插入到哪张表时出的错
        		"mesg":{} // 具体出错信息
        }
+       <i>可以通过index属性判断是否修改表的过程中出错</i>
        </pre>  
 
 ##导入配置说明
@@ -94,9 +100,12 @@
 	"colModels":[
 		{
 			tableName:"tableName", // 表名称，必填
+			"alterTable":true|false, // 是否修改表结构，可选 
 			"columnMapping":[ // 表字段映射规则
 				{
 					"name":"name", // 表字段名称
+					"alterType":"ADD"|"MODIFY", // 与修改表有关，表示对该列是增加还是修改类型
+					"dataType":"", // 与修改表有关，该字段的数据库类型
 					"valueGenerator":"", //值生成方式，可选值见下表
 					<table style="margin-left:150px">
 						<tr>

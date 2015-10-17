@@ -1,26 +1,63 @@
 {
 	"connection":{
+		"host":"localhost",
 		"database":"test",
 		"user":"root",
 		"port":3307,
 		"charset":"utf8_general_ci",
+		"connectTimeout":50000,
 		"debug":"true"
 	},
 	"colModels":[
-		{
-			"tableName":"import",
-			"columnMapping":[
-				{
-					"name":"name",
-					"valueGenerator":"fileColumn",
-					"fileColumn":"user"
-				},{
-					"name":"date",
-					"valueGenerator":"fileColumn",
-					"fileColumn":"date"
-				}
-			]
-		}
-	],
+	{
+      "tableName":"basic",
+      "alterTable":false,
+      "columnMapping":[{
+          "name":"name",
+          "alterType":"ADD",
+          "dataType":"varchar(255)",
+          "valueGenerator":"fileColumn",
+          "fileColumn":"姓名"
+      },{
+          "name":"description",
+          "alterType":"ADD",
+          "dataType":"varchar(255)",
+          "valueGenerator":"fileColumn"
+      },{
+          "name":"status",
+          "valueGenerator":"constant",
+          "constant":"0"
+      },{
+          "name":"IDCard",
+          "valueGenerator":"fileColumn",
+          "fileColumn":"身份证"
+      },{
+          "name":"SSN",
+          "alterType":"MODIFY",
+          "dataType":"varchar(200)",
+          "valueGenerator":"fileColumn",
+          "fileColumn":"SSN"
+      }]
+  },{
+      "tableName":"family",
+      "alterTable":true,
+      "columnMapping":[{
+          "name":"father",
+          "valueGenerator":"fileColumn",
+          "fileColumn":"父亲"
+      },{
+          "name":"mother",
+          "valueGenerator":"fileColumn",
+          "fileColumn":"母亲"
+      },{
+          "name":"stu_id",
+          "valueGenerator":"relateId",
+          "relateId":"basic"
+      },{
+      	"name":"status",
+      	"alterType":"ADD",
+      	"dataType":"varchar(10)"
+      	}]
+  }],
 	"preProcessors":["fun1"]
 }
