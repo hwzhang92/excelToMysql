@@ -91,6 +91,7 @@ router.post('/',function(req,res){
           item.columnMapping.forEach(function(column){
             if(column.alterType == 'ADD' || column.alterType == 'MODIFY'){
               alterSqlRight += ' ' + column.alterType + ' ' + connection.escapeId(column.name) + ' ' + column.dataType + ',';
+              //dataType配置项有sql注入漏洞
             }
           })
           if(alterSqlRight.length > 0){
