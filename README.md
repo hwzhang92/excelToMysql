@@ -1,14 +1,14 @@
-#excelToMysql#
+# excelToMysql
 > 将excel文件导入到Mysql数据库中
 <br>
 <br>
 
-##excel文件规范
+## excel文件规范
 * excel97-03格式，不支持07以后的格式
 * 用office打开excel文件，如果单元格有感叹号，尽量根据说明修正，否则会出现意想不到的问题
 * 一个excel文件只能有1个sheets
 
-##文件管理API
+## 文件管理API
 1. **GET /files 获取文件列表**
 	* response:
 	<pre>
@@ -99,7 +99,7 @@
        }
        </pre>  
 
-##导入配置说明
+## 导入配置说明
 <pre>
 {
 	"connection":{}, //参见<a href="https://github.com/felixge/node-mysql/#connection-options">node-mysql connection options</a>
@@ -147,7 +147,7 @@
 ## 安装
 下载完整项目包，进入到package.json所在目录，执行npm install
 
-##启动方式
+## 启动方式
 * 进入package.json所在目录，执行npm start，默认3000端口
 * 指定端口:
 	* **linux**: PORT=[port] npm start
